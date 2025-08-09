@@ -18,7 +18,50 @@ It implements a **chat-based booking assistant** for pharmacy services (e.g., fl
 
 ---
 
-## 2. Architecture
+## 2. Quick Setup
+
+### Prerequisites
+- Go 1.22+
+- Google Cloud account
+- Access to Google Calendar
+- Redis (optional, for caching)
+
+### Getting Started
+1. **Clone and setup**:
+   ```bash
+   git clone <repository>
+   cd appointment-scheduling-bot
+   go mod download
+   ```
+
+2. **Configure Google Calendar**:
+   - Follow the [Quick Setup Guide](docs/quick-setup.md) (5 minutes)
+   - Or see [Full Setup Documentation](docs/google-calendar-setup.md)
+
+3. **Test the setup**:
+   ```bash
+   ./scripts/test-calendar.sh
+   go run scripts/test-calendar-connection.go
+   ```
+
+4. **Start development**:
+   ```bash
+   go run cmd/api/main.go
+   curl http://localhost:8080/healthz
+   ```
+
+### Configuration
+Copy `env.example` to `config.env` and update:
+```env
+GCAL_CALENDAR_ID=your-calendar@gmail.com
+GOOGLE_CREDS_JSON=service-account.json
+```
+
+**⚠️ Important**: Never commit `service-account.json` to version control!
+
+---
+
+## 3. Architecture
 
 ```mermaid
 sequenceDiagram
@@ -50,7 +93,7 @@ sequenceDiagram
 
 ---
 
-## 3. Modules
+## 4. Modules
 
 | Module                  | Purpose | Technology |
 |-------------------------|---------|------------|
@@ -67,7 +110,7 @@ sequenceDiagram
 
 ---
 
-## 4. Repository Structure
+## 5. Repository Structure
 
 ```plaintext
 /cmd/api                # Main HTTP server
@@ -86,7 +129,7 @@ README.md
 
 ---
 
-## 5. Tools & Libraries
+## 6. Tools & Libraries
 
 - **Go** (1.22) – performance and concurrency-friendly.
 - **Fiber** – lightweight web framework.
@@ -98,7 +141,7 @@ README.md
 
 ---
 
-## 6. Error Handling
+## 7. Error Handling
 
 - **Unavailable slot:** recomputes and suggests next 3 best options.
 - **Missing info:** asks targeted follow-up questions.
@@ -108,7 +151,7 @@ README.md
 
 ---
 
-## 7. If I Had More Time
+## 8. If I Had More Time
 
 - Add group appointments and capacity management.
 - Build a provider dashboard for manual overrides.
@@ -117,7 +160,7 @@ README.md
 
 ---
 
-## 8. Testing Tips
+## 9. Testing Tips
 
 - Pre-fill Google Calendar with both busy and free slots.
 - Simulate a calendar outage to test API failure flow.
@@ -126,6 +169,6 @@ README.md
 
 ---
 
-## 9. License
+## 10. License
 
 MIT – free to use and adapt.
